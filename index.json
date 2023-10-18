@@ -1,0 +1,114 @@
+{
+    "Prologue": {
+        "Découverte de BlitzPHP": "/docs/{version}/decouverte",
+        "Crédits": "/docs/{version}/credits",
+        "Notes de version": "/docs/{version}/notes-de-version",
+        "Guide de mise à niveau": "/docs/{version}/mise-a-niveau",
+        "Guide de contribution": "/docs/{version}/contributions"
+    },
+    "Démarrer": {
+        "Installation": "/docs/{version}/installation",
+        "Configuration": "/docs/{version}/configuration",
+        "Structure des dossiers": "/docs/{version}/structure",
+        "Frontend": "/docs/{version}/frontend",
+        "Déploiement": "/docs/{version}/deploiement"
+    },
+    "Concepts du framework": {
+        "Cycle de vie": "/docs/{version}/cycle-de-vie",
+        "Autoloader": "/docs/{version}/autoloader",
+        "Helpers": "/docs/{version}/helpers",
+        "Prestation de services": "/docs/{version}/services",
+        "Injection de dépendances": "/docs/{version}/conteneur",
+        "Les facades": "/docs/{version}/facades"
+    },
+    "Elements de base": {
+        "Routage": "/docs/{version}/routage",
+        "Middleware": "/docs/{version}/middleware",
+        "Contrôleurs" : "/docs/{version}/controleurs",
+        "Requêtes" : "/docs/{version}/requetes",
+        "Réponses" : "/docs/{version}/reponses",
+        "Rendu des vues" : "/docs/{version}/vues",
+        "Vues natives BlitzPHP" : "/docs/{version}/vues-natives",
+        "Génération d'URL" : "/docs/{version}/urls",
+        "Session" : "/docs/{version}/session",
+        "Validation des données" : "/docs/{version}/validation",
+        "Gestion des exceptions" : "/docs/{version}/exceptions",
+        "Journalisation" : "/docs/{version}/journalisation",
+        "Programmation modulaire" : "/docs/{version}/programmation-modulaire",
+        "Gérez vos applications" : "/docs/{version}/gerez-vos-applications"
+    },
+    "Elements avancés" : {
+        "Gestion du cache" : "/docs/{version}/cache",
+        "Les contrats": "/docs/{version}/contrats",
+        "Système d'évènements" : "/docs/{version}/evenements",
+        "Stockage des fichiers" : "/docs/{version}/fichiers",
+        "Internationalisation" : "/docs/{version}/internationalisation",
+        "Envoi d'email" : "/docs/{version}/email",
+        "Négociation de contenu" : "/docs/{version}/negociation",
+        "API REST" : "/docs/{version}/rest",
+        "Tests unitaire" : "/docs/{version}/tests"
+    },
+    "Sécurité" : {
+        "Guide de sécurité" : "/docs/{version}/securite",
+        "Encryption" : "/docs/{version}/encryption",
+        "Hashage" : "/docs/{version}/hashage"
+    },
+    "Base de données" : {
+        "Démarrer": "/docs/{version}/base-de-donnees",
+        "Travailler avec la bdd": "/docs/{version}/travailler-avec-la-bdd",
+        "Query Builder": "/docs/{version}/query-builder",
+        "Repositories": "/docs/{version}/repositories",
+        "Migrations": "/docs/{version}/migrations",
+        "Seeders": "/docs/{version}/seeders"
+    },
+    "Wolke - ORM": {
+        "Démarrer": "/docs/{version}/wolke",
+        "Relations": "/docs/{version}/wolke-relations",
+        "Collections": "/docs/{version}/wolke-collections",
+        "Mutateurs et casts": "/docs/{version}/wolke-mutateurs",
+        "Sérialisation": "/docs/{version}/wolke-serialisation"
+    },
+    "Schild - Auth": {
+        "Démarrer": "/docs/{version}/schild",
+        "Prise en main": "/docs/{version}/schild-prise-en-main",
+        "Authentification": "/docs/{version}/schild-authentification",
+        "Autorisation": "/docs/{version}/schild-autorisation",
+        "Actions": "/docs/{version}/schild-actions",
+        "Evenements": "/docs/{version}/schild-evenements",
+        "Personnalisation": "/docs/{version}/schild-personnalisation",
+        "Réinitialisation du mot de passe": "/docs/{version}/schild-reinitialisation",
+        "Bannir les utilisateurs": "/docs/{version}/schild-bannir-les-utilisateurs",
+        "Protection d’une API avec des tokens": "/docs/{version}/schild-tokens",
+        "Authentification mobile avec tokens": "/docs/{version}/schild-mobile-tokens",
+        "Authentification JWT": "/docs/{version}/schild-jwt"
+    },
+    "Klinge - CLI": {
+        "Démarrer": "/docs/{version}/klinge",
+        "Commandes Klinge": "/docs/{version}/klinge-commandes",
+        "Créer une commande": "/docs/{version}/klinge-creer-une-commande",
+        "References des méthodes": "/docs/{version}/klinge-methodes"
+    },
+    "Classes utilitaires": {
+        "Arr": "/docs/{version}/arr",
+        "Collection": "/docs/{version}/collection",
+        "Date": "/docs/{version}/date",
+        "Formatter": "/docs/{version}/formatter",
+        "Inflector": "/docs/{version}/inflector",
+        "Helpers": "/docs/{version}/classe-helper",
+        "Text": "/docs/{version}/text",
+        "Timer": "/docs/{version}/timer",
+        "UUID": "/docs/{version}/uuid"
+    },
+    "Autres": {
+        "Constantes": "/docs/{version}/constantes",
+        "Fonctions globles": "/docs/{version}/fonctions",
+        "Packages autonomes": "/docs/{version}/packages"
+    },
+    "Packages officiels": {
+        "Client HTTP": "/docs/{version}/client-http"
+    },
+    "Packages adaptés": {
+        "Inertia": "/docs/{version}/inertia",
+        "Vite": "/docs/{version}/vite"
+    }
+}
