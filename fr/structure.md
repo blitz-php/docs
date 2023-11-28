@@ -57,7 +57,6 @@ Le dossier de `app` contient une variété de sous-dossiers supplémentaires tel
 Comme dit précédemment, le dossier `app` est le dossier où vous passerez la majeur partie de votre temps. Par défaut, ce dossier contient la liste des sous-dossiers suivants:
 * `Config`: Stocke les fichiers de configuration
 * `Controllers`: Les contrôleurs déterminent le déroulement du programme
-* `Database`: Stocke les migrations de bases de données et les fichiers de départ (seeders)
 * `Middlewares`: Stocke les classes de middlewares qui peuvent s'exécuter avant et après le contrôleur
 * `Helpers`: Stock des collections de fonctions autonomes
 * `Translations`: Le support multilingue lit les chaînes de langue à partir d'ici
@@ -90,10 +89,26 @@ Le dossier `Exceptions` constitue également un bon endroit pour placer toutes l
 
 Ce dossier n'existe pas par défaut, mais sera créé pour vous si vous exécutez la commande Klinge `make:mail`. C'est un dossier qui contient toutes vos [classes qui représentent les emails](/docs/{version}/email) envoyés par votre application. Les objets Mail vous permettent d'encapsuler toute la logique de création d'un e-mail dans une classe unique et simple qui peut être envoyée à l'aide de la méthode `Mail::envoi`.
 
-<a name="le-dossier-rules"></a>
-### Le dossier `Rules`
+<a name="le-dossier-providers"></a>
+### Le dossier `Providers`
 
-Ce dossier n'existe pas par défaut, mais sera créé pour vous si vous exécutez la commande Klinge `make:rule`. Le dossier `Rules` contient les objets de règles de validation personnalisées pour votre application. Les règles sont utilisées pour encapsuler une logique de validation complexe dans un objet simple. Pour plus d’informations, consultez la [documentation de validation](/docs/{version}/validation).
+Bien que n'existant pas par défaut, le dossier `Providers` est fait pour contenir tous les [fournisseurs de services](/docs/{version}/conteneur) de votre application. Les fournisseurs de services amorcent votre application en liant des services dans le conteneur de services, en enregistrant des événements ou en effectuant d’autres tâches pour préparer votre application aux requêtes entrantes.
+
+<a name="le-dossier-rules"></a>
+### Les dossiers `Rules` et `Validations`
+
+Ces dossiers n'existent pas par défaut, mais seront créés pour vous si vous exécutez la commande Klinge `make:rule` ou `make:validation`. 
+
+Le dossier `Rules` contient les objets de règles de validation personnalisées pour votre application. Les règles sont utilisées pour encapsuler une logique de validation complexe dans un objet simple. 
+
+Le dossier `Validations` contient les classes de validation pour des scénarios plus complexes. Les classes de validation encapsulent leur propre logique de validation et d’autorisation.
+
+Pour plus d’informations, consultez la [documentation de validation](/docs/{version}/validation).
+
+<a name="le-dossier-database"></a>
+### Le dossier `Database`
+
+Par défaut, ce dossier n'existe pas mais il sera automatiquement créé lorsque vous déciderez d'[utiliser une base de données](/docs/{version}/base-de-donnees) dans votre projet. Le dossier de `Database` contient vos migrations de bases de données et vos seeders. Si vous le souhaitez, vous pouvez également utiliser ce répertoire pour contenir une base de données SQLite.
 
 <a name="modification-de-l-emplacement-des-dossiers"></a>
 ## Modification de l'emplacement des dossiers
