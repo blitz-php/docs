@@ -18,7 +18,7 @@ Il existe une variété d’outils et de frameworks à votre disposition lors de
 
 ## Votre premier projet BlitzPHP
 
-Avant de créer votre premier projet Laravel, vous devez vous assurer que votre machine locale dispose de PHP et [Composer](https://getcomposer.org) installé. De plus, bien qu'étant facultatif, nous recommandons d'[installer de Node et NPM](https://nodejs.org).
+Avant de créer votre premier projet BlitzPHP, vous devez vous assurer que votre machine locale dispose de PHP et [Composer](https://getcomposer.org) installé. De plus, bien qu'étant facultatif, nous recommandons d'[installer de Node et NPM](https://nodejs.org).
 
 Après avoir installé PHP et Composer, vous pouvez créer un nouveau projet BlitzPHP via la commande Composer `create-project` :
 
@@ -67,7 +67,7 @@ BlitzPHP doit toujours être servi à partir de la racine du « dossier public �
 <a name="next-steps"></a>
 ## Prochaines étapes
 
-Now that you have created your Laravel project, you may be wondering what to learn next. First, we strongly recommend becoming familiar with how Laravel works by reading the following documentation:
+Maintenant que vous avez créé votre projet BlitzPHP, vous vous demandez peut-être quoi apprendre ensuite. Tout d’abord, nous vous recommandons fortement de vous familiariser avec le fonctionnement de BlitzPHP en lisant la documentation suivante :
 
 <div class="content-list" markdown="1">
 
