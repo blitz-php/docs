@@ -37,7 +37,7 @@ L'apprentissage de ce système sera étudié en détail dans [une section qui lu
 <a name="blade"></a>
 ### Blade
 
-[Blade](https://laravel.com/docs/master/blade) est sans doute le moteur de template le plus utilisé de nos jour. C'est un langage de modélisation extrêmement léger issu du framework [Laravel](https://laravel.com) qui fournit une syntaxe pratique et courte pour afficher des données, itérer sur des données, etc. :
+<a href="https://laravel.com/docs/master/blade" target="_blank">Blade</a> est sans doute le moteur de template le plus utilisé de nos jour. C'est un langage de modélisation extrêmement léger issu du framework <a href="https://laravel.com" target="_blank">Laravel</a> qui fournit une syntaxe pratique et courte pour afficher des données, itérer sur des données, etc. :
 
 ```blade
 <ul>
@@ -47,12 +47,12 @@ L'apprentissage de ce système sera étudié en détail dans [une section qui lu
 </ul>
 ```
 
-L'intégration de Blade à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package [beebmx/blade](https://packagist.org/packages/beebmx/blade) et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Blade pour le rendu de vos vues.
+L'intégration de Blade à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package <a href="https://packagist.org/packages/jenssegers/blade" target="_blank">jenssegers/blade</a> et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Blade pour le rendu de vos vues.
 
 <a name="twig"></a>
 ### Twig
 
-Issu de l'écosytème [Symfony](https://symfony.com/),  [Twig](https://twig.symfony.com/) est un moteur template rapide, sécurisé et flexible
+Issu de l'écosystème <a href="https://symfony.com/" target="_blank">Symfony</a>,  <a href="https://twig.symfony.com/" target="_blank">Twig</a> est un moteur template rapide, sécurisé et flexible.
 
 ```twig
 <ul>
@@ -67,7 +67,7 @@ L'intégration de Twig à BlitzPHP se fait en **une minute**. Vous n'avez qu'à 
 <a name="smarty"></a>
 ### Smarty
 
-[Smarty](https://smarty-php.github.io/smarty/stable/) est un moteur de template pour PHP, facilitant la séparation de la présentation (HTML/CSS) de la logique applicative. Il vous permet d'écrire des modèles, en utilisant des variables, des modificateurs, des fonctions et des commentaires.
+<a href="https://smarty-php.github.io/smarty/stable/" target="_blank">Smarty</a> est un moteur de template pour PHP, facilitant la séparation de la présentation (HTML/CSS) de la logique applicative. Il vous permet d'écrire des modèles, en utilisant des variables, des modificateurs, des fonctions et des commentaires.
 
 ```smarty
 <ul>
@@ -77,12 +77,12 @@ L'intégration de Twig à BlitzPHP se fait en **une minute**. Vous n'avez qu'à 
 </ul>
 ```
 
-L'intégration de Smarty à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package [smarty/smarty](https://packagist.org/packages/smarty/smarty) et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Smarty pour le rendu de vos vues.
+L'intégration de Smarty à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package <a href="https://packagist.org/packages/smarty/smarty" target="_blank">smarty/smarty</a> et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Smarty pour le rendu de vos vues.
 
 <a name="latte"></a>
 ### Latte
 
-[Latte](https://latte.nette.org/en/) est un moteur de template intuitif et rapide pour ceux qui souhaitent avoir des sites PHP plus sécurisés. Il introduit l’échappement contextuel et se dit être le premier moteur te template véritablement sécurisé et intuitifs pour PHP
+<a href="https://latte.nette.org/en/" target="_blank">Latte</a> est un moteur de template intuitif et rapide pour ceux qui souhaitent avoir des sites PHP plus sécurisés. Il introduit l’échappement contextuel et se dit être le premier moteur te template véritablement sécurisé et intuitifs pour PHP
 
 ```latte
 <ul>
@@ -92,12 +92,12 @@ L'intégration de Smarty à BlitzPHP se fait en **une minute**. Vous n'avez qu'�
 </ul>
 ```
 
-L'intégration de Latte à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package [latte/latte](https://packagist.org/packages/latte/latte) et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Latte pour le rendu de vos vues.
+L'intégration de Latte à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package <a href="https://packagist.org/packages/latte/latte" target="_blank">latte/latte</a> et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Latte pour le rendu de vos vues.
 
 <a name="plates"></a>
 ### Plates
 
-[Plates](http://platesphp.com/) est un système de template PHP natif rapide, facile à utiliser et facile à étendre. Il s’inspire de l’excellent moteur de template Twig et s’efforce d’apporter des fonctionnalités de langage de template modernes aux modèles PHP natifs. Plates est conçu pour les développeurs qui préfèrent utiliser des modèles PHP natifs plutôt que des langages de modèles compilés, tels que Twig ou Smarty.
+<a href="http://platesphp.com/" target="_blank">Plates</a> est un système de template PHP natif rapide, facile à utiliser et facile à étendre. Il s’inspire de l’excellent moteur de template Twig et s’efforce d’apporter des fonctionnalités de langage de template modernes aux modèles PHP natifs. Plates est conçu pour les développeurs qui préfèrent utiliser des modèles PHP natifs plutôt que des langages de modèles compilés, tels que Twig ou Smarty.
 
 ```php
 <ul>
@@ -107,10 +107,10 @@ L'intégration de Latte à BlitzPHP se fait en **une minute**. Vous n'avez qu'à
 </ul>
 ```
 
-L'intégration de Plates à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package [league/plates](https://packagist.org/packages/league/plates) et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Plates pour le rendu de vos vues.
+L'intégration de Plates à BlitzPHP se fait en **une minute**. Vous n'avez qu'à installer le package <a href="https://packagist.org/packages/league/plates" target="_blank">league/plates</a> et modifier votre fichier `app/Config/view.php` pour que BlitzPHP utilise Plates pour le rendu de vos vues.
 
 > **Note**  
-> L'installation et la configuration de tous ses différents moteurs de template seront étudiées en détails dans le chapitre réservé aux [vues](/docs/{version}/vues)
+> L'installation et la configuration de tous ces différents moteurs de template seront étudiées en détails dans le chapitre réservé aux [vues](/docs/{version}/vues#utilisation-d-un-moteur-de-template)
 
 <a name="utilisation-de-vuejs-react"></a>
 ## Utilisation VueJS / React

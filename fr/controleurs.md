@@ -349,7 +349,7 @@ Vous remarquez qu'on ne renseigne plus `users`. BlitzPHP utilisera le nom du con
 ### Définir les données de vue
 
 Vos vues afficheront probablement des données dynamique provenant de la base de données ou générées sous certaines conditions. Ce sont vos contrôleurs qui sont chargés d'envoyer des données aux vues et pour ce faire, vous devez transmettre un tableau clé/valeur au **deuxième paramètre** de la méthode `view()`. La clé étant le nom de la variable et la valeur, la valeur associée.
-Rendez-vous dans [la section consacrée aux vues](/docs/{version}/vues) pour en savoir plus.  
+Rendez-vous dans [la section consacrée aux vues](/docs/{version}/vues#transmission-de-donnees-aux-vues) pour en savoir plus.  
 
 Si vous avez des données qui serons utilisées par toutes les vues de votre contrôleur, vous pouvez utiliser la propriété `$this->viewDatas`, idéalement dans le constructeur ou la méthode [initialize()](#constructeur) 
 
