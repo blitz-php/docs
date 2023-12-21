@@ -26,15 +26,7 @@ Après avoir installé PHP et Composer, vous pouvez créer un nouveau projet Bli
 composer create-project blitz-php/app-skeleton example-app
 ```
 
-Vous pouvez également créer de nouveaux projets BlitzPHP en installant globalement le programme d’installation BlitzPHP via Composer. 
-
-```shell
-composer global require blitz-php/installer
-
-blitz new example-app
-```
-
-Une fois le projet créé, démarrez le serveur de développement local de BlitzPH à l’aide de la commande Klinge `serve`:
+Une fois le projet créé, démarrez le serveur de développement local de BlitzPH à l’aide de la [commande Klinge](/docs/{version}/klinge) `serve`:
 
 ```shell
 cd example-app
