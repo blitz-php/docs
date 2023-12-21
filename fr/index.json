@@ -51,7 +51,9 @@
     "Sécurité" : {
         "Guide de sécurité" : "/docs/{version}/securite",
         "Encryption" : "/docs/{version}/encryption",
-        "Hashage" : "/docs/{version}/hashage"
+        "Hashage" : "/docs/{version}/hashage",
+        "Protection CSRF": "/docs/{version}/csrf",
+        "Middlewares de sécurité": "/docs/{version}/middlewares-de-securite"
     },
     "Base de données" : {
         "Démarrer": "/docs/{version}/base-de-donnees",
@@ -102,6 +104,7 @@
     "Autres": {
         "Constantes": "/docs/{version}/constantes",
         "Fonctions globles": "/docs/{version}/fonctions",
+        "Helpers BlitzPHP": "/docs/{version}/helpers-blitzphp",
         "Packages autonomes": "/docs/{version}/packages"
     },
     "Packages officiels": {
