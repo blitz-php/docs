@@ -144,7 +144,7 @@ Response |  [BlitzPHP\Http\Response](/api/{version}/BlitzPHP/Http/Response.html)
 Route  |  [BlitzPHP\Router\RouteBuilder](/api/{version}/BlitzPHP/Router/RouteBuilder.html)  |  &nbsp;
 Session  |  [BlitzPHP\Session\Store](/api/{version}/BlitzPHP/Session/Store.html)  |  `session`
 Storage  |  [BlitzPHP\Filesystem\FilesystemManager](/api/{version}/BlitzPHP/Filesystem/FilesystemManager.html)  |  `storage`
-Url  |  [BlitzPHP\Router\UrlGenerator](/api/{version}/BlitzPHP/Router/UrlGenerator.html)  |  &nbsp;
+Url  |  [BlitzPHP\Http\UrlGenerator](/api/{version}/BlitzPHP/Http/UrlGenerator.html)  |  &nbsp;
 Validator  |  [BlitzPHP\Validation\Validator](/api/{version}/BlitzPHP/Validation/Validator.html)  |  &nbsp;
 View  |  [BlitzPHP\View\View](/api/{version}/BlitzPHP/View/View.html)  |  `viewer`
 

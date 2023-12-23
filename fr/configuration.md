@@ -2,7 +2,7 @@
 title: Configuration
 ---
 
-<a name="intoduction"></a>
+<a name="introduction"></a>
 ## Introduction
 
 Tous les fichiers de configuration du framework BlitzPHP sont stockés dans le répertoire `app/Config`. Chaque option est documentée, alors n’hésitez pas à parcourir les fichiers et à vous familiariser avec les options qui s’offrent à vous.

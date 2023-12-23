@@ -2,7 +2,7 @@
 title: Structure des dossiers
 ---
 
-<a name="intoduction"></a>
+<a name="introduction"></a>
 ## Introduction
 
 La structure d’application BlitzPHP par défaut est destinée à fournir un excellent point de départ pour les grandes et les petites applications. Mais vous êtes libre d’organiser votre application comme vous le souhaitez. Néanmoins, pour tirer le meilleur parti de BlitzPHP, vous devez comprendre comment l'application est structurée par défaut et ce que vous pouvez modifier pour répondre à vos besoins spécifiques.
