@@ -437,7 +437,7 @@ chown www-data /storage/framework/session/
 > Pour utiliser le gestionnaire `database`, vous devez au préalable installer le module de base de données. Rendez-vous sur [le guide de la base de données](/docs/{version}/base-de-donnees) pour en savoir plus.
 
 > **Attention**  
-> Seules les bases de données MySQL et PostgreSQL sont officiellement prises en charge, en raison de l'absence de mécanismes de verrouillage consultatifs sur les autres plateformes. L'utilisation de sessions sans verrou peut causer toutes sortes de problèmes, en particulier en cas d'utilisation intensive d'AJAX, et nous ne prendrons pas en charge de tels cas. Utilisez la méthode [close()](#clôture-d-une-session) après avoir traité les données de la session si vous avez des problèmes de performance.
+> Seules les bases de données MySQL et PostgreSQL sont officiellement prises en charge, en raison de l'absence de mécanismes de verrouillage consultatifs sur les autres plateformes. L'utilisation de sessions sans verrou peut causer toutes sortes de problèmes, en particulier en cas d'utilisation intensive d'AJAX, et nous ne prendrons pas en charge de tels cas. Utilisez la méthode [close()](#cloture-d-une-session) après avoir traité les données de la session si vous avez des problèmes de performance.
 
 Le gestionnaire `database` utilise une base de données relationnelle telle que MySQL ou PostgreSQL pour stocker les sessions. C'est un choix populaire parmi de nombreux utilisateurs, car il permet au développeur d'accéder facilement aux données de session au sein d'une application - il s'agit simplement d'une table supplémentaire dans votre base de données.
 
