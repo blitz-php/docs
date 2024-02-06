@@ -712,6 +712,45 @@ $routes->group('admin', static function ($routes) {
 
 Cela gérerait l'URL vers `admin/users/list`.
 
+<a name="priorite-de-route"></a>
+## Priorité de route
+
+Les routes sont enregistrées dans la table de routage dans l'ordre dans lequel elles sont définies. Cela signifie que lorsqu'on accède à un URI, la première route correspondante est exécutée.
+
+> **Attention**  
+> Si une route est définie plusieurs fois avec des gestionnaires différents, seul la première route définie est enregistrée.
+
+Vous pouvez vérifier les routes enregistrées dans la table de routage en exécutant la commande [klinge route:list](#listing-des-routes).
+
+<a name="modification-de-la-priorite-de-la-route"></a>
+### Modification de la priorité de la route
+
+Lorsque l'on travaille avec des modules, il peut y avoir un problème si les routes de l'application contiennent des caractères génériques. Dans ce cas, les routes du module ne seront pas traités correctement. Vous pouvez résoudre ce problème en réduisant la priorité du traitement des routes à l'aide de l'option `priority`. Ce paramètre accepte des nombres entiers positifs et zéro. Plus le nombre spécifié dans l'option `priority` est élevé, plus la priorité de la route dans la file d'attente de traitement est faible :
+
+```php
+<?php
+
+// Il faut d'abord activer le traitement de la file d'attente des routes par priorité.
+$routes->setPrioritize();
+
+// Configurer les routes
+$routes->get('(.*)', 'PostsController::index', ['priority' => 1]);
+
+// Modules\Acme\Config\routes
+$routes->get('admin', 'AdminController::index');
+
+// La route "admin" sera désormais traitée avant la route générique.
+```
+
+Pour désactiver cette fonctionnalité, vous devez appeler la méthode avec le paramètre `false` :
+
+```php
+$routes->setPrioritize(false);
+```
+
+> **Note**  
+> Par défaut, toutes les routes ont une priorité de 0. Les nombres entiers négatifs seront convertis en valeur absolue.
+
 <a name="options-de-configuration-des-routes"></a>
 ## Options de configuration des routes
 
