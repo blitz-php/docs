@@ -455,3 +455,330 @@ BlitzPHP injecte automatiquement la variable `$errors` à l'intérieur de toutes
     <div class="alert alert-danger"><?= $errors->line('title') ?></div>
 <?php endif; ?>
 ```
+
+<a name="composants"></a>
+## Composants
+
+De nombreuses applications comportent de petits fragments de vue qui peuvent être répétés d'une page à l'autre ou à différents endroits sur les pages. Il s'agit souvent de boîtes d'aide, de contrôles de navigation, de publicités, de formulaires de connexion, etc. BlitzPHP vous permet d'encapsuler la logique de ces blocs de présentation dans des **composants de vue**. Ce sont en fait des mini-vues qui peuvent être incluses dans d'autres vues. Elles peuvent avoir une logique intégrée pour gérer toute logique d'affichage spécifique au composant. Elles peuvent être utilisées pour rendre vos vues plus lisibles et plus faciles à maintenir en séparant la logique de chaque composant dans sa propre classe.
+Il existe deux approches pour écrire des composants : les composants anonymes et [les composants contrôlés](#composants-controles).
+
+Les composants anonymes sont des classes qui renvoient une chaîne de caractères à partir de la méthode choisie. Un exemple de composant de message d'alerte simple pourrait ressembler à ceci :
+
+```php
+<?php
+
+namespace App\Components;
+
+class AlertMessage
+{
+    public function show(array $params): string
+    {
+        return "<div class=\"alert alert-{$params['type']}\">{$params['message']}</div>";
+    }
+}
+```
+
+Une fois le composant défini, Vous l'appelleriez à partir d'une vue à travers l'instruction :
+
+```php
+// Dans une vue.
+
+<?= component('App\Components\AlertMessage::show', ['type' => 'success', 'message' => 'Connexion réussie.']) ?>
+```
+
+Vous pouvez ne pas indiquer le namespace complet de la classe, BlitzPHP supposera qu'elle se trouve dans le namespace `App\Components`. Ainsi, l'exemple ci-dessus est équivalent à:
+
+```php
+<?= component('AlertMessage::show', ['type' => 'success', 'message' => 'Connexion réussie.']) ?>
+```
+
+Si elle ne s'y trouve pas, tous les namespaces seront parcourus jusqu'à ce qu'elle soit trouvée, en cherchant dans un sous-répertoire **Components** de chaque [namespace reconnu](/docs/{version}/autoloader#namespaces).
+
+Vous pouvez également transmettre les paramètres sous la forme d'une chaîne clé/valeur :
+
+```php
+<?= component('AlertMessage::show', 'type=success, message=Connexion réussie.') ?>
+```
+
+En outre, vous pouvez utiliser des noms de paramètres qui correspondent aux variables de la méthode pour une meilleure lisibilité. Lorsque vous l'utilisez de cette manière, tous les paramètres doivent toujours être spécifiés dans l'appel du composant :
+
+```php
+<?php
+namespace App\Components;
+
+use App\Entities\Blog;
+
+class Blog
+{
+    // ...
+
+    public function recentPosts(string $category, int $limit): string
+    {
+        $posts = Blog::where('category', $category)
+            ->latest('published_on')
+            ->limit($limit)
+            ->get();
+
+        return view('components/recentPosts', ['posts' => $posts]);
+    }
+}
+```
+
+```php
+// Dans une vue.
+
+<?= view_cell('Blog::recentPosts', 'category=sport, limit=5') ?>
+```
+
+<a name="composants-controles"></a>
+## Composants contrôlés
+
+Les composants contrôlés ont deux objectifs principaux :
+* Rendre la construction du composants aussi rapide que possible.
+* Fournir une logique et une flexibilité supplémentaires à vos vues, si elles en ont besoin.
+
+La classe du composant doit étendre `BlitzPHP\View\Components\Component`. Elles doivent avoir un fichier de vue dans le même dossier. Par convention, le nom de la classe doit être en PascalCase avec le suffixe `Component` et la vue doit être la version en `kebab_cased` du nom de la classe, sans le suffixe. Par exemple, si vous avez une classe `AlertComponent`, le fichier de vue doit être `alert.php`.
+
+<a name="creation-d-un-composant-controle"></a>
+### Création d'un composant contrôlé
+
+Les composants contrôlés doivent être générés à partir d'une classe qui étend la classe `BlitzPHP\View\Components\Component` qui offre des possibilités supplémentaires rendant vos composants de plus flexibles et plus rapides à utiliser.
+
+Au niveau le plus élémentaire, tout ce que vous devez mettre en œuvre dans la classe, ce sont des propriétés publiques. Ces propriétés seront automatiquement mises à la disposition du fichier de vue.
+
+La mise en œuvre de `AlertMessage` ci-dessus en tant que composant contrôlé ressemblerait à ce qui suit :
+
+```php
+// Classe de contrôle: app/Components/AlertMessageComponent.php
+
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class AlertMessageComponent extends Component
+{
+    public $type;
+    public $message;
+}
+```
+
+```php
+// Fichier de vue: app/Components/alert-message.php
+
+<div class="alert alert-<?= esc($type, 'attr') ?>">
+    <?= esc($message) ?>
+</div>
+```
+
+```php
+// Utilisation dans une vue classique:
+
+<?= component('AlertMessageComponent', 'type=warning, message=Failed.') ?>
+```
+
+<a name="generation-d-un-composant-par-commande"></a>
+### Génération d'un composant par commande
+
+Vous pouvez également créer un composant contrôlée à l'aide d'une commande intégrée au [CLI de BlitzPHP](/docs/{version}/klinge). La commande est `php klinge make:component`. Elle prend un argument, le nom du composant à créer. Le nom doit être en **PascalCase**, et la classe sera créée dans le répertoire `app/Components`. Le fichier de vue sera également créé dans le répertoire `app/Components`.
+
+```bash
+php klinge make:component AlertMessage
+```
+
+<a name="utiliser-une-vue-differente"></a>
+### Utiliser une vue différente
+
+Vous pouvez spécifier un nom de vue personnalisé en définissant la propriété `view` dans la classe. La vue sera localisée comme n'importe quelle vue :
+
+```php
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class AlertMessageComponent extends Component
+{
+    public $type;
+    public $message;
+    
+    protected string $view = 'my/custom/view';
+}
+```
+
+<a name="personnaliser-le-rendu"></a>
+### Personnaliser le rendu
+
+Si vous avez besoin de plus de contrôle sur le rendu du code HTML, vous pouvez implémenter une méthode `render()`. Cette méthode vous permet d'exécuter une logique supplémentaire et de transmettre des données supplémentaires à la vue, si nécessaire. La méthode `render()` doit renvoyer une chaîne de caractères.
+
+Pour bénéficier de toutes les fonctionnalités des composants contrôlés, vous devez utiliser `$this->view()` au lieu du helper `view()` normal :
+
+```php
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class AlertMessageComponent extends Component
+{
+    public $type;
+    public $message;
+    
+    public function render(): string
+    {
+        return $this->view('my/custom/view', ['extra' => 'data']);
+    }
+}
+```
+
+<a name="proprietes-calculees"></a>
+### Propriétés calculées
+
+Si vous devez exécuter une logique supplémentaire pour une ou plusieurs propriétés, vous pouvez utiliser des propriétés calculées. Pour ce faire, vous devez définir la propriété comme `protégée` ou `privée` et implémenter une méthode publique dont le nom se compose du nom de la propriété entouré de `get` et de `Property` :
+
+```php
+// Dans une vue. Initialiser les propriétés protégées.
+<?= component('AlertMessageComponent', ['type' => 'note', 'message' => 'test']) ?>
+```
+
+```php
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class AlertMessageComponent extends Component
+{
+    protected $type;
+    protected $message;
+    private $computed;
+
+    public function mount(): void
+    {
+        $this->computed = sprintf('%s - %s', $this->type, $this->message);
+    }
+
+    public function getComputedProperty(): string
+    {
+        return $this->computed;
+    }
+
+    public function getTypeProperty(): string
+    {
+        return $this->type;
+    }
+
+    public function getMessageProperty(): string
+    {
+        return $this->message;
+    }
+}
+```
+
+```php
+// app/Components/alert-message.php
+<div>
+    <p>type - <?= esc($type) ?></p>
+    <p>message - <?= esc($message) ?></p>
+    <p>computed: <?= esc($computed) ?></p>
+</div>
+```
+
+> **Attention**  
+> Vous ne pouvez pas définir des propriétés déclarées comme privées lors de l'initialisation de la cellule.
+
+<a name="methodes-de-presentation"></a>
+### Méthodes de présentation
+
+Parfois, vous devez exécuter une logique supplémentaire pour la vue, mais vous ne voulez pas la passer en paramètre. Vous pouvez implémenter une méthode qui sera appelée depuis la vue du composant elle-même. Cela peut améliorer la lisibilité de vos vues :
+
+```php
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class RecentPostsComponent extends Component
+{
+    protected $posts;
+
+    public function linkPost($post): string
+    {
+        return anchor('posts/' . $post->id, $post->title);
+    }
+}
+```
+
+```php
+// app/Components/recent-posts.php
+<ul>
+    <?php foreach ($posts as $post): ?>
+        <li><?= $this->linkPost($post) ?></li>
+    <?php endforeach ?>
+</ul>
+```
+
+<a name="execution-de-la-logique-d-installation"></a>
+### Exécution de la logique d'installation
+
+Si vous avez besoin d'exécuter une logique supplémentaire avant que la vue ne soit rendue, vous pouvez implémenter une méthode `mount()`. Cette méthode sera appelée juste après l'instanciation de la classe et pourra être utilisée pour définir des propriétés supplémentaires ou effectuer d'autres opérations logiques :
+
+```php
+namespace App\Components;
+
+use App\Entities\Post;
+use BlitzPHP\View\Components\Component;
+
+class RecentPostsComponent extends Component
+{
+    protected $posts;
+
+    public function mount(): void
+    {
+        $this->posts = Post::latest()->take(10)->get();
+    }
+}
+```
+
+Vous pouvez passer des paramètres supplémentaires à la méthode `mount()` en les transmettant sous forme de tableau à la fonction `component()`. Tous les paramètres envoyés qui correspondent à un nom de paramètre de la méthode `mount()` seront transmis :
+
+
+```php
+namespace App\Components;
+
+use App\Entities\Post;
+use BlitzPHP\View\Components\Component;
+
+class RecentPostsComponent extends Component
+{
+    protected $posts;
+
+    public function mount(?int $categorieId): void
+    {
+        $this->posts = Post::latest()
+            ->when(
+                $categorieId, 
+                static fn ($query, $categoryId) => $query->where('category_id', $categoryId)
+            )
+            ->take(10)
+            ->get();
+    }
+}
+```
+
+```php
+// Appelé dans la vue principale : 
+<?= component('RecentPostsComponent', ['categoryId' => 5]) ?>
+```
+
+<a name="mise-en-cache-des-composants"></a>
+### Mise en cache des composants
+
+Vous pouvez mettre en cache les résultats de l'appel du composant en indiquant le nombre de secondes pour lesquelles les données doivent être mises en cache en tant que troisième paramètre. [Le moteur de cache](/docs/{version}/cache) actuellement configuré sera utilisé :
+
+```php
+// Mettre le composant en cache pendant 5 minutes
+<?= component('App\Components\Blog::recentPosts', 'limit=5', 5 * MINUTE) ?>
+```
+
+Vous pouvez fournir un nom personnalisé à utiliser à la place de celui généré automatiquement si vous le souhaitez, en passant le nouveau nom comme quatrième paramètre :
+
+```php
+// Mettre le composant en cache pendant 5 minutes
+<?= component('App\Components\Blog::recentPosts', 'limit=5', 5 * MINUTE, 'nom_du_cache') ?>
+```
