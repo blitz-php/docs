@@ -24,10 +24,10 @@ Si vous n’êtes intéressé que par une section particulière de la sortie de 
 php artisan about --only=production
 ```
 
-Ou, pour explorer en détail les valeurs d’un fichier de configuration spécifique, vous pouvez utiliser la commande `config:show`:
+Ou, pour explorer en détail les valeurs d’un fichier de configuration spécifique, vous pouvez utiliser la commande `config:check`:
 
 ```bash
-php klinge config:show database
+php klinge config:check database
 ```
 
 <a name="configuration-d-environnement"></a>
