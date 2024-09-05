@@ -7,15 +7,15 @@ title: Système d'évènements
 
 Le système d'événements de BlitzPHP fournit un moyen d'accéder et de modifier le fonctionnement interne du framework sans avoir à pirater les fichiers principaux. Lorsque BlitzPHP s'exécute, il suit un processus d'exécution spécifique. Cependant, il peut arriver que vous souhaitiez déclencher une action à un stade particulier du processus d'exécution. Par exemple, vous pourriez vouloir exécuter un script juste avant que vos contrôleurs ne soient chargés, ou juste après, ou encore déclencher l'un de vos propres scripts à un autre endroit.
 
-Les événements fonctionnent selon un modèle de `publication/abonnement`, où un événement est déclenché à un moment donné au cours de l'exécution du script. D'autres scripts peuvent "s'abonner" à cet événement en s'enregistrant auprès de la classe Événements pour lui faire savoir qu'ils souhaitent effectuer une action lorsque l'événement est déclenché.
+Les événements fonctionnent selon un modèle de `publication/abonnement`, où un événement est déclenché à un moment donné au cours de l'exécution du script. D'autres scripts peuvent "s'abonner" à cet événement en s'enregistrant auprès de la classe `Event` pour lui faire savoir qu'ils souhaitent effectuer une action lorsque l'événement est déclenché.
 
 <a name="definition-d-un-evenement"></a>
 ## Définition d'un événement
 
-BlitzPHP peut découvrir automatiquement tous les fichiers `Events/**` que vous avez créés dans n’importe quel namespace défini. Cela permet une utilisation simple de tous les evenements de module. Pour écouter un événement, vous devez créer une classe d'écoute qui répondant aux exigences suivantes :
+BlitzPHP peut découvrir automatiquement tous les fichiers `Listeners/**` que vous avez créés dans n’importe quel namespace défini. Cela permet une utilisation simple de tous les événements de module. Pour écouter un événement, vous devez créer une classe d'écoute qui répondant aux exigences suivantes :
 
 - Son namespace doit être accessible via Composer (pour des package tiers) ou défini dans `app/Config/Autoload.php`
-- À l’intérieur du namespace, le fichier doit se trouver dans le dossier `{namespace}/Events`
+- À l’intérieur du namespace, le fichier doit se trouver dans le dossier `{namespace}/Listeners`
 - Elle doit implémenter l'interface <a href="https://github.com/blitz-php/contracts/blob/main/Event/EventListenerInterface.php" target="_blank">BlitzPHP\Contracts\Event\EventListenerInterface</a>.
 
 Le squelette de votre classe d'écoute pourrait alors être  :
@@ -23,7 +23,7 @@ Le squelette de votre classe d'écoute pourrait alors être  :
 ```php
 <?php
 
-namespace App\Events;
+namespace App\Listeners;
 
 use BlitzPHP\Contracts\Event\EventListenerInterface;
 use BlitzPHP\Contracts\Event\EventManagerInterface;
@@ -54,7 +54,7 @@ public function listen(EventManagerInterface $manager): void
 }
 ```
 
-Dans cet exemple, chaque fois que l'événement `pre_system` est exécuté, la closure définie est exécutée. Notez que le second paramètre peut être n'importe quelle forme de <a href="https://www.php.net/manual/en/function.is-callable.php" target="_blank">callable</a> que PHP reconnaît :
+Dans cet exemple, chaque fois que l'événement `app:init` est exécuté, la closure définie est exécutée. Notez que le second paramètre peut être n'importe quelle forme de <a href="https://www.php.net/manual/en/function.is-callable.php" target="_blank">callable</a> que PHP reconnaît :
 
 ```php
 // Appel d'une fonction autonome
@@ -86,15 +86,15 @@ Tous les abonnés ayant la même priorité seront exécutés dans l'ordre où il
 BlitzPHP offre trois constantes de classe, définies pour votre usage, qui fixent des fourchettes utiles pour les valeurs. Vous n'êtes pas obligé de les utiliser, mais vous trouverez peut-être qu'elles facilitent la lecture :
 
 ```php
-EVENT_PRIORIRY_LOW // 200
-EVENT_PRIORITY_NORMAL // 100
-EVENT_PRIORITY_HIGH // 10
+\BlitzPHP\Event\Event::PRIORIRY_LOW // 200
+\BlitzPHP\Event\Event::PRIORITY_NORMAL // 100
+\BlitzPHP\Event\Event::PRIORITY_HIGH // 10
 ```
 
 Une fois triés, tous les abonnés sont exécutés dans l'ordre. Si l'un des abonnés renvoie une valeur booléenne `fausse`, l'exécution des abonnés s'arrête.
 
 <a name="declencher-vos-propres-evenements"></a>
-## Déclancher vos propres événements
+## Déclencher vos propres événements
 
 Le gestionnaire d'événements de BlitzPHP vous permet également de créer facilement des événements dans votre propre code. Pour utiliser cette fonctionnalité, il vous suffit d'appeler la méthode `emit()` du service `event` avec le nom de l'événement :
 
@@ -142,10 +142,43 @@ service('event')->emit($event);
 
 Le constructeur de la classe `Event` prend les 3 paramètres tel que définis précédemment (nom, cible, arguments). De ce fait, l'exemple ci-dessus est équivalent au précédent.
 
+> **Note**  
+> Au lieu de transmettre un événement avec la classe `Event` de cette manière, il est préférable d'avoir une classe dédiée qui héritera de la classe `Event`.
+>
+> ```php
+> <?php   
+> 
+> namespace App\Events;  
+>    
+> use App\Entities\User;
+> use BlitzPHP\Event\Event;
+>
+> class UserCreate extends Event
+> {   
+>   protected $name = 'user.create';  
+>
+>   public function __construct(User $user, string $via)   
+>   {
+>       $this->setTarget($user);  
+>       $this->setParams(['via' => $via]);
+>   }
+> }
+> ```    
+>
+> Ainsi, il ne vous reste plus qu'à faire:   
+>
+> ```php
+> $user = User::create([...]);
+>
+> $event = new \App\Events\UserCreate($user, 'register-form');  
+>  
+> service('event')->emit($event);
+> ```  
+
 <a name="comment-recuperer-la-cible-et-les-arguments-d-un-evenement"></a>
 ### Comment récupérer la cible et les arguments d'un événement  
 
-Les callables utilisés par les abonnés d'événements reçoivent en argument un objet `Event` ayant tous les données transmis lors du déclenchement d'en événement. Vous pouvez alors utiliser les méthodes `getTarget()` et `getParams()` pour récupérer la cible et les arguments d'un événement.
+Les callables utilisés par les abonnés d'événements reçoivent en argument un objet `Event` ayant toutes les données transmise lors du déclenchement de l'événement. Vous pouvez alors utiliser les méthodes `getTarget()` et `getParams()` pour récupérer la cible et les arguments d'un événement.
 
 Si nous voulons s'abonner à l'événement `user.create` créé précédemment, on aura un code semblable à celui-ci:
 
