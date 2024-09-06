@@ -2458,20 +2458,20 @@ Vous pouvez trouver pratique de spécifier les règles de validation par défaut
 ```php
 <?php
 
-namespace App\Events;
+namespace App\Listeners;
 
 use BlitzPHP\Contracts\Event\EventListenerInterface;
 use BlitzPHP\Contracts\Event\EventManagerInterface;
 use Dimtrovich\Validation\Rules\Password;
 
-class Listener implements EventListenerInterface
+class AppListener implements EventListenerInterface
 {
     /**
      * {@inheritDoc}
      */
     public function listen(EventManagerInterface $event): void
     {
-        $event->attach('app:init', function () {
+        $event->on('app:init', function () {
             Password::defaults(function () {
                 $rule = Password::min(8);
  
