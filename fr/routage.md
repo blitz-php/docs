@@ -879,7 +879,7 @@ $routes->group('admin', [
     'controller' => '\App\Controllers\AdminController',
     'subdomain' => 'app'
     ], static function($routes) {
-        $routes->get('to', 'from');
+        $routes->get('path', 'action');
         // ...
 });
 ```
@@ -894,10 +894,9 @@ En utilisant la façade Route, l'exemple ci dessus devient le suivant:
 <?php 
 
 use BlitzPHP\Facades\Route;
-use BlitzPHP\Router\RouteBuilder;
 
-Route::prefix('admin')->middleware(['session', 'verified', 'role:admin'])->controller('\App\Controllers\AdminController')->subdomain('app')->group(function(RouteBuilder $route) {
-    $route->get('to', 'from');
+Route::prefix('admin')->middleware(['session', 'verified', 'role:admin'])->controller('\App\Controllers\AdminController')->subdomain('app')->group(function() {
+    Route::get('path', 'action');
     // ...
 });
 ```
@@ -948,7 +947,7 @@ Route::priority('int'); // Priorité de la route
 ```
 
 > **Attention**  
-> Toutes les options de routes doivent être définies avec l'appel d'une méthode de définition de route (`get`, `post`, `put`, etc)
+> Toutes les options de routes doivent être définies avant l'appel d'une méthode de définition de route (`get`, `post`, `put`, etc)
 
 <a name="facade-regroupement-des-routes"></a>
 ### Regroupement des routes
@@ -960,10 +959,9 @@ Si vous avez des options à définir pour un groupe, ils doivent être définir 
 ```php
 <?php 
 use BlitzPHP\Facades\Route;
-use BlitzPHP\Router\RouteBuilder;
 
-Route::namespace('App\API\v1')->prefix('api')->group(static function (RouteBuilder $route) {
-    $route->resource('users');
+Route::namespace('App\API\v1')->prefix('api')->group(static function () {
+    Route::resource('users');
 });
 ```
 
