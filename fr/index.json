@@ -42,7 +42,7 @@
         "Les contrats": "/docs/{version}/contrats",
         "Système d'évènements" : "/docs/{version}/evenements",
         "Stockage des fichiers" : "/docs/{version}/fichiers",
-        "Internationalisation" : "/docs/{version}/internationalisation",
+        "Localisation" : "/docs/{version}/localisation",
         "Envoi d'email" : "/docs/{version}/email",
         "Négociation de contenu" : "/docs/{version}/negociation",
         "API REST" : "/docs/{version}/rest",
