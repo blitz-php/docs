@@ -481,16 +481,16 @@ $path = $this->request->file('avatar')->storeAs(
 <a name="autres-informations-sur-les-fichiers-telecharges"></a>
 #### Autres informations sur les fichiers téléchargés
 
-Si vous souhaitez obtenir le nom et l'extension d'origine du fichier téléchargé, vous pouvez le faire en utilisant les méthodes `getClientOriginalName` et `getClientOriginalExtension` :
+Si vous souhaitez obtenir le nom et l'extension d'origine du fichier téléchargé, vous pouvez le faire en utilisant les méthodes `getClientFilename` et `clientExtension` :
 
 ```php
 $file = $this->request->file('avatar');
  
-$name = $file->getClientOriginalName();
-$extension = $file->getClientOriginalExtension();
+$name = $file->getClientFilename();
+$extension = $file->clientExtension();
 ```
 
-Cependant, n'oubliez pas que les méthodes `getClientOriginalName` et `getClientOriginalExtension` sont considérées comme peu sûres, car le nom et l'extension du fichier peuvent être modifiés par un utilisateur malveillant. C'est pourquoi il est préférable d'utiliser les méthodes `hashName` et `extension` pour obtenir un nom et une extension pour le téléchargement d'un fichier donné :
+Cependant, n'oubliez pas que les méthodes `getClientFilename` et `clientExtension` sont considérées comme peu sûres, car le nom et l'extension du fichier peuvent être modifiés par un utilisateur malveillant. C'est pourquoi il est préférable d'utiliser les méthodes `hashName` et `extension` pour obtenir un nom et une extension pour le téléchargement d'un fichier donné :
 
 ```php
 $file = $this->request->file('avatar'); 
