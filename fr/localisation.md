@@ -418,7 +418,7 @@ Si vous souhaitez remplacer certains messages de langue, créez des fichiers de 
 Vous pouvez générer et mettre à jour automatiquement des fichiers de traduction dans le dossier de votre application. La commande recherchera l'utilisation de la fonction `lang()`, combinera les clés de traduction actuelles dans `app/Translations` en définissant la locale `language` à partir de `app/Config/app.php`. Après l'opération, vous devez traduire vous-même les clés de langue. La commande est capable de reconnaître les clés imbriquées normalement `File.array.nested.text`. Les clés précédemment enregistrées ne changent pas.
 
 ```shell
-php klinge lang:find
+php klinge translations:find
 ```
 
 ```php
@@ -445,7 +445,7 @@ Les fichiers de langue générés ne seront probablement pas conformes à vos no
 Avant la mise à jour, il est possible de prévisualiser les traductions trouvées par la commande :
 
 ```shell
-php klinge lang:find --verbose --show-new
+php klinge translations:find --verbose --show-new
 ```
 
 La sortie détaillée de `--verbose` affiche également une liste des clés non valides. Par exemple :
@@ -453,11 +453,11 @@ La sortie détaillée de `--verbose` affiche également une liste des clés non 
 ```
 ...
 
-Files found: 10
-New translates found: 30
-Bad translates found: 5
+Fichiers trouvés: 10
+Nouvelles traductions trouvées: 30
+Mauvaises traductions trouvées: 5
 +------------------------+---------------------------------+
-| Bad Key                | Filepath                        |
+| Mauvaise clés          | Chemin d'accès                  |
 +------------------------+---------------------------------+
 | ..invalid_nested_key.. | app/Controllers/Translation.php |
 | .invalid_key           | app/Controllers/Translation.php |
@@ -466,17 +466,17 @@ Bad translates found: 5
 | TranslationBad...      | app/Controllers/Translation.php |
 +------------------------+---------------------------------+
 
-All operations done!
+Opérations terminés avec succès!
 ```
 
 Pour une recherche plus précise, indiquez le lieu ou le répertoire à analyser.
 
 ```shell
-php klinge lang:find --dir Controllers/Students --locale en --show-new
+php klinge translations:find --dir Controllers/Students --locale en --show-new
 ```
 
 Des informations détaillées peuvent être obtenues en exécutant la commande :
 
 ```shell
-php klinge lang:find --help
+php klinge translations:find --help
 ```
