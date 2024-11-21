@@ -843,9 +843,9 @@ Une fois ceci étant fait, vous pouvez commencer à écrire vos vues smarty comm
 L'utilisation de <a href="https://latte.nette.org/" target="_blank">Latte</a> ou de <a href="http://platesphp.com/" target="_blank">Plates</a> se fait de la même manière que précédemment. Deux choses, modification des paramètres, et installation du package adéquat:
 
 ```shell
-// Pour l'utilisation de Latte
+# Pour l'utilisation de Latte
 composer require latte/latte
 
-// Pour l'utilisation de Plates
+# Pour l'utilisation de Plates
 composer require league/plates
 ```
