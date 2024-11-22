@@ -5,7 +5,7 @@ title: Envoi d'email
 <a name="introduction"></a>
 ## Introduction
 
-L'envoi d'emails ne doit pas être compliqué. BlitzPHP fournit une API d'envoi d'emails simple et propre, alimentée par soit par <a href="https://github.com/PHPMailer/PHPMailer" target="_blank">PHPMailer</a>, soit par <a href="https://symfony.com/doc/6.2/mailer.html" target="_blank">Symfony Mailer</a>. BlitzPHP fourni des pilotes pour l'envoi d'emails vous permettant de commencer rapidement à envoyer des emails via un service local ou basé sur le cloud de votre choix.
+L'envoi d'emails ne doit pas être compliqué. BlitzPHP fournit une API d'envoi d'emails simple et propre, alimentée soit par <a href="https://github.com/PHPMailer/PHPMailer" target="_blank">PHPMailer</a>, soit par <a href="https://symfony.com/doc/6.2/mailer.html" target="_blank">Symfony Mailer</a>. BlitzPHP fourni des pilotes pour l'envoi d'emails vous permettant de commencer rapidement à envoyer des emails via un service local ou basé sur le cloud de votre choix.
     
 <a name="configuration"></a>
 ## Configuration
@@ -42,7 +42,7 @@ De part sa simplicité, <a href="https://github.com/PHPMailer/PHPMailer" target=
 composer require phpmailer/phpmailer
 ```
 
-Ceci étant fait, il ne vous restera plus qu'à définir vos accès SMTP dans le fichier de configuration `app/Config/mail.php` et BlitzPHP fera toutes les configurations nécessaire pour vous.
+Ceci étant fait, il ne vous restera plus qu'à définir vos accès SMTP dans le fichier de configuration `app/Config/mail.php` et BlitzPHP fera toutes les configurations nécessaires pour vous.
 
 <a name="utilisation-avec-symfony-mailer"></a>
 ### Utilisation avec Symfony Mailer
