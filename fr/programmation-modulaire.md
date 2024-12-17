@@ -105,7 +105,7 @@ Le processus de découverte recherchera les éléments découvrables sur ce chem
 
 Les paquets installés via Composer en utilisant les espaces de noms PSR-4 seront également découverts par défaut. Les paquets utilisant les namespaces PSR-0 ne seront pas détectés.
 
-<a name="spécifier-les-paquets-composer"></a>
+<a name="specifier-les-paquets-composer"></a>
 #### Spécifier les paquets Composer
 
 Pour éviter de perdre du temps à rechercher des paquets Composer non pertinents, vous pouvez spécifier manuellement les paquets à découvrir en modifiant le paramètre `composer` dans `app/Config/autoload.php` :
