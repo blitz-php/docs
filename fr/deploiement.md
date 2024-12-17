@@ -294,8 +294,25 @@ server {
 <a name="optimisation"></a>
 ## Optimisation
 
+Avant de déployer votre application en production, il y a plusieurs choses que vous pouvez faire pour rendre votre application plus efficace. 
+
+
+Cette section décrit les fonctionnalités d'optimisation que BlitzPHP fournit.
+
+<a name="klinge-optimize"></a>
+### Klinge optimize
+
+La commande `klinge optimize` effectue les optimisations suivantes :
+
+* [Suppression des paquets de développement](#suppression-des-paquets-de-developpement) 
+* Activation de la [mise en cache de la configuration](#mise-en-cache-de-configuration) 
+* Activation de la [mise en cache du localisateur de fichiers](#mise-en-cache-du-localisateur-de-fichiers)
+
 <a name="optimisation-de-l-autoloader"></a>
-### Optimisation de l'Autoloader 
+### Optimisation de l'autoloader 
+
+<a name="suppression-des-paquets-de-developpement"></a>
+#### Suppression des paquets de développement
 
 Lors du déploiement en production, assurez-vous d'optimiser la carte des classes chargées par Composer afin qu'il puisse trouver rapidement le fichier approprié à charger pour une classe donnée :
 
@@ -303,5 +320,30 @@ Lors du déploiement en production, assurez-vous d'optimiser la carte des classe
 composer install --optimize-autoloader --no-dev
 ```
 
+La commande ci-dessus supprimera les paquets Composer destinés uniquement au développement et qui ne sont pas nécessaires dans l'environnement de production. Cela réduira considérablement la taille du dossier `vendor`.
+
 > **Note**  
-> En plus d'optimiser le chargeur automatique, vous devez toujours vous assurer d'inclure un fichier `composer.lock` dans le référentiel de contrôle de code source de votre projet. Les dépendances de votre projet peuvent être installées beaucoup plus rapidement lorsqu'un fichier `composer.lock` est présent.
+> En plus d'optimiser l'autoloader, vous devez toujours vous assurer d'inclure un fichier `composer.lock` dans le référentiel de contrôle de code source de votre projet. Les dépendances de votre projet peuvent être installées beaucoup plus rapidement lorsqu'un fichier `composer.lock` est présent.
+
+<a name="specifier-les-paquets-a-decouvrir"></a>
+#### Spécifier les paquets à découvrir
+
+Si la découverte automatique des paquets Composer est activée, tous les paquets Composer sont analysés lorsque cela est nécessaire. Mais il n'est pas nécessaire d'analyser les paquets qui ne sont pas des paquets BlitzPHP, donc spécifier les paquets à analyser évite l'analyse inutile.
+
+Voir [Spécifier les paquets Composer](/docs/{version}/programmation-modulaire#specifier-les-paquets-composer).
+
+<a name="mise-en-cache-de-configuration"></a>
+### Mise en cache de configuration
+
+> **Attention**  
+> Une fois mises en cache, les valeurs de configuration ne sont jamais modifiées jusqu'à ce que le cache soit supprimé, même si le fichier de configuration ou .env est modifié.
+
+La mise en cache des configurations peut améliorer les performances. Toutefois, le cache doit être supprimé manuellement lorsque les valeurs de la configuration sont modifiées.
+
+<a name="mise-en-cache-du-localisateur-de-fichiers"></a>
+### Mise en cache du localisateur de fichiers
+
+La mise en cache des chemins d'accès aux fichiers trouvés par le localisateur de fichiers peut améliorer les performances. Toutefois, le cache doit être supprimé manuellement lors de l'ajout, de la suppression ou de la modification des chemins d'accès aux fichiers.
+
+Voir [la mise en cache du localisateur de fichiers](/docs/{version}/autoloader#mise-en-cache-du-localisateur-de-fichiers).
+

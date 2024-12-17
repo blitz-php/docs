@@ -79,3 +79,55 @@ La prise en charge de Composer est automatiquement initialisée par défaut. Par
 
 > **Note**  
 > Si le même namespace est défini dans le fichier `app/Config/autoload.php` et Composer, l'autoloader de Composer sera le premier à avoir une chance de localiser le fichier.
+
+<a name="mise-en-cache-du-localisateur-de-fichiers"></a>
+## Mise en cache du localisateur de fichiers
+
+La classe **Locator** est responsable de la recherche de fichiers ou de l'obtention d'un nom de classe à partir d'un fichier, ce qui n'est pas possible avec le chargement automatique de PHP.
+
+Pour améliorer ses performances, la mise en cache du localisateur de fichiers a été mise en œuvre.
+
+<a name="comment-ca-marche"></a>
+### Comment ça marche
+
+* Enregistrer toutes les données trouvées par le localisateur dans un fichier cache lors de la destruction, si les données du cache sont mises à jour. 
+* Restaurer les données du cache lors de l'instanciation, si les données du cache sont disponibles.
+
+Les données mises en cache sont utilisées de manière permanente.
+
+<a name="comment-supprimer-les-donnees-mises-en-cache"></a>
+### Comment supprimer les données mises en cache
+
+Une fois stockées, les données mises en cache n'expirent jamais. 
+
+Ainsi, si vous ajoutez ou supprimez des fichiers ou si vous modifiez les chemins d'accès aux fichiers existants ou les namespaces, les anciennes données mises en cache seront renvoyées et votre application risque de ne pas fonctionner correctement. 
+
+Dans ce cas, vous devez supprimer manuellement le fichier de cache. Si vous ajoutez un package BlitzPHP via Composer, vous devez également supprimer le fichier cache.
+
+Vous pouvez utiliser la commande `klinge cache:clear` :
+
+```shell
+php klinge cache:clear
+```
+
+Ou supprimez simplement le fichier `storage/framework/cache/FileLocatorCache`.
+
+> **Note**  
+> La commande `klinge optimize` efface le cache.
+
+<a name="comment-activer-la-mise-en-cache-du-localisateur-de-fichiers"></a>
+### Comment activer la mise en cache du localisateur de fichiers ?
+
+Attribuez la valeur `true` à la clé suivante dans `app/Config/optimize.php` :
+
+```php
+return [
+    // ...
+    'locator_cache_enabled' => true,
+];
+```
+
+Vous pouvez également l'activer à l'aide de la commande `klinge optimize`.
+
+> **Note**  
+> Cette clé ne peut pas être remplacée par des [variables d'environnement](/docs/{version}/configuration#configuration-d-environnement).
