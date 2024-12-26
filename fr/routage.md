@@ -1122,7 +1122,7 @@ Le résultat ressemble à ce qui suit :
 - La colonne *Nom* affiche le nom de la route. `»` indique que le nom est le même que le chemin de la route (généralement quand aucun nom n'a explicitement été défini).
 
 > **Attention**  
-> Le système n'est pas parfait. Si vous utilisez des [espaces réservés personnalisés](#espaces-reserves-personnalises), les middlewares peuvent ne pas être corrects. Si vous souhaitez vérifier les middlewares pour une route, vous pouvez utiliser la commande [klinge middleware:check](/docs/{version}/middleware#klinge-middleware-check).
+> Le système n'est pas parfait. Si vous utilisez des [espaces réservés personnalisés](#espaces-reserves-personnalises), les middlewares peuvent ne pas être corrects. Si vous souhaitez vérifier les middlewares pour une route, vous pouvez utiliser la commande [klinge middleware:check](/docs/{version}/middleware#confirmation-des-middlewares).
 
 <a name="autorouting"></a>
 ### Autorouting
