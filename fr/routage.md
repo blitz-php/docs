@@ -1094,15 +1094,15 @@ La clé est le premier segment URI du module et la valeur est le namespace du co
 > **Note**
 > Si vous définissez `module_routes`, le routage du module est prioritaire. Dans l'exemple ci-dessus, même si vous disposez du contrôleur `App\Controllers\BlogController`, **http://localhost:8080/blog** sera acheminé vers le contrôleur par défaut `Acme\Blog\Controllers\HomeController`.
 
-<a name="Confirmation des routes"></a>
+<a name="confirmation-des-routes"></a>
 ## Confirmation des routes
 
-BlitzPHP met à votre disposition une [commande](/docs/version/klinge) pour afficher toutes les routes.
+BlitzPHP met à votre disposition une [commande](/docs/version/klinge) pour afficher toutes les routes de votre application.
 
 <a name="listing-des-routes"></a>
 ### Listing des routes
 
-Affiche toutes les routes et middlewares :
+La commande Klinge `route:list` peut facilement fournir une vue d'ensemble de toutes les routes définies par votre application :
 
 ```bash
 php klinge route:list
@@ -1111,15 +1111,17 @@ php klinge route:list
 Le résultat ressemble à ce qui suit :
 
 ```
-| Méthode | Route | Nom | Gestionnaire                           | Middlewares |
-|---------|-------|-----|----------------------------------------|-------------|
-| GET     | /     | »   | \App\Controllers\HomeController::index | toolbar     |
-| GET     | feed  | »   | (Closure)                              | toolbar     |
+GET    / .................................................. home > App\Controllers\HomeController::index
+GET    storage/(.*) ........................................................................... (Closure)
+GET    stats/messages ........................ stats.messages > App\Controllers\StatsController::messages
+POST   reset-password .............................. App\Controllers\AuthController::processResetPassword
+GET    reset-password ................................. App\Controllers\AuthController::formResetPassword
+PATCH  profil/update ........................... profil.update > App\Controllers\ProfilController::update
 ```
 
-- La colonne *Méthode* affiche la méthode HTTP que la route écoute. 
-- La colonne *Route* affiche le chemin de la route à correspondre. Le chemin d'une route définie est exprimé sous forme d'expression régulière.
-- La colonne *Nom* affiche le nom de la route. `»` indique que le nom est le même que le chemin de la route (généralement quand aucun nom n'a explicitement été défini).
+- La première colonne affiche **la méthode HTTP** que la route écoute. 
+- La deuxième colonne affiche **le chemin de la route** à correspondre. Le chemin d'une route définie est exprimé sous forme d'expression régulière.
+- La troisième colonne affiche **le gestionnaire de la route**, précédé au besoin par le **nom de la route**.
 
 > **Attention**  
 > Le système n'est pas parfait. Si vous utilisez des [espaces réservés personnalisés](#espaces-reserves-personnalises), les middlewares peuvent ne pas être corrects. Si vous souhaitez vérifier les middlewares pour une route, vous pouvez utiliser la commande [klinge middleware:check](/docs/{version}/middleware#confirmation-des-middlewares).
@@ -1129,14 +1131,11 @@ Le résultat ressemble à ce qui suit :
 
 Lorsque vous utilisez le routage automatique, le résultat ressemble à ce qui suit :
 ```
-| Méthode   | Route                   | Nom | Gestionnaire                                | Middlewares |
-|-----------|-------------------------|-----|---------------------------------------------|-------------|
-| GET(auto) | product/list/../..[/..] |     | \App\Controllers\ProductController::getList | toolbar     |
-
+GET(auto)   product/list/../..[/..] ........................ \App\Controllers\ProductController::getList
 ```
 
 - La méthode sera comme `GET(auto)`.
-- `/..` dans la colonne Route indique un segment. `[/..]` indique qu'il est facultatif.
+- `/..` dans la deuxième colonne indique un segment. `[/..]` indique qu'il est facultatif.
 
 > **Note**  
 > Lorsque le routage automatique est activé et que vous disposez de la route `home`, il est également accessible par `Home`, ou peut-être par `hOme`, `home`, `HOME`, etc., mais la commande n'affichera que `home`.
@@ -1144,28 +1143,46 @@ Lorsque vous utilisez le routage automatique, le résultat ressemble à ce qui s
 Si vous voyez une route commençant par `x` comme ci-dessous, cela indique une route non valide qui ne sera pas acheminée, mais le contrôleur dispose d'une méthode publique d'acheminement.
 
 ```
-| Méthode   | Route      | Nom | Gestionnaire                            | Middlewares |
-|-----------|------------|-----|-----------------------------------------|-------------|
-| GET(auto) | x home/foo |     | \App\Controllers\HomeController::getFoo | <unknown>   |
-
+GET(auto)   x home/foo ........................................ \App\Controllers\HomeController::getFoo
 ```
 
 L'exemple ci-dessus montre que vous disposez de la méthode `\App\Controllers\HomeController::getFoo()`, mais elle n'est pas acheminée car il s'agit du contrôleur par défaut (`HomeController` par défaut) et le nom du contrôleur par défaut doit être omis dans l'URI. Vous devez supprimer la méthode `getFoo()`.
 
-<a name="trier-par-gestionnaire"></a>
-### Trier par gestionnaire
+<a name="options-de-la-commande"></a>
+### Options de la commande
 
-Vous pouvez trier les routes par gestionnaire :
+Par défaut, les middleware de route qui sont assignés à chaque route ne seront pas affichés dans la sortie `route:list`; cependant, vous pouvez demander à BlitzPHP d'afficher les middlewares de route en ajoutant l'option `-v` à la commande :
 
 ```bash
-php klinge route:list -h
+php klinge route:list -v
 ```
 
-<a name="specifier-l-hote"></a>
-### Spécifier l'hôte
-
-Vous pouvez spécifier l'hôte dans l'URL de la requête avec l'option `--host` :
+Avec l'option `--path`, vous pouvez également demander à BlitzPHP de n'afficher que les routes qui commencent par un URI donné :
 
 ```bash
-php klinge route:list --host=accounts.example.com
+php klinge route:list --path admin
+```
+
+De plus, vous pouvez demander à BlitzPHP de cacher toutes les routes définies par des paquets tiers en fournissant l'option `--except-vendor` lors de l'exécution de la commande `route:list` :
+
+```bash
+php klinge route:list --except-vendor
+```
+
+De même, vous pouvez demander à BlitzPHP de n'afficher que les routes définies par des paquets tiers en fournissant l'option `--only-vendor` lors de l'exécution de la commande `route:list` :
+
+```bash
+php klinge route:list --only-vendor
+```
+
+Par ailleurs, les options `--domain`, `--name`, `--handler` et `--method` vous permettrons de filtrer les routes en fonction du nom de domaine, du nom de la route, du gestionnaire et de la méthode HTTP respectivement. Ainsi, la commande suivante affichera uniquement les routes appelées en GET et dont le nom contient "admin"
+
+```bash
+php klinge route:list --method GET --name admin
+```
+
+Pour avoir plus d'informations sur les options de la commande `route:list`, vous pouvez utiliser l'option `--help`
+
+```bash
+php klinge route:list --help
 ```
