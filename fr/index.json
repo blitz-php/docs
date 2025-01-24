@@ -46,7 +46,8 @@
         "Envoi d'email" : "/docs/{version}/email",
         "Négociation de contenu" : "/docs/{version}/negociation",
         "API REST" : "/docs/{version}/rest",
-        "Tests unitaire" : "/docs/{version}/tests"
+        "Tests unitaire" : "/docs/{version}/tests",
+        "Planification des tâches": "/docs/{version}/planification-des-taches"
     },
     "Sécurité" : {
         "Guide de sécurité" : "/docs/{version}/securite",
