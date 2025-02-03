@@ -51,7 +51,7 @@
     },
     "Sécurité" : {
         "Guide de sécurité" : "/docs/{version}/securite",
-        "Encryption" : "/docs/{version}/encryption",
+        "Chiffrement des données" : "/docs/{version}/chiffrement",
         "Hashage" : "/docs/{version}/hashage",
         "Protection CSRF": "/docs/{version}/csrf",
         "Middlewares de sécurité": "/docs/{version}/middlewares-de-securite"
@@ -109,7 +109,8 @@
         "Packages autonomes": "/docs/{version}/packages"
     },
     "Packages officiels": {
-        "Client HTTP": "/docs/{version}/client-http"
+        "Client HTTP": "/docs/{version}/client-http",
+		"Paramètres": "/docs/{version}/parametres"
     },
     "Packages adaptés": {
         "Inertia": "/docs/{version}/inertia",
