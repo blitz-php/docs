@@ -54,6 +54,7 @@
         "Chiffrement des données" : "/docs/{version}/chiffrement",
         "Hashage" : "/docs/{version}/hashage",
         "Protection CSRF": "/docs/{version}/csrf",
+        "CORS": "/docs/{version}/cors",
         "Middlewares de sécurité": "/docs/{version}/middlewares-de-securite"
     },
     "Base de données" : {
