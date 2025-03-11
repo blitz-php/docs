@@ -124,8 +124,8 @@ return [
 ];
 ```
 
-<a name="encodage-des-cles-ou-des-resultats"></a>
-#### Encodage des clés ou des résultats
+<a name="encodage-des-cles"></a>
+#### Encodage des clés
 
 Vous remarquerez que la méthode `createKey` produit des données binaires, qui sont difficiles à traiter (un copier-coller peut les endommager), vous pouvez donc utiliser les fonctions `bin2hex`, ou `base64_encode` pour travailler avec la clé d'une manière plus conviviale. Par exemple :
 
@@ -138,13 +138,6 @@ $encoded = bin2hex(\BlitzPHP\Encryption\Encryption::createKey(32));
 //  Mettre la même valeur avec hex2bin(), 
 // pour qu'elle soit toujours transmise en binaire à la bibliothèque :
 $key = hex2bin('votre-clé-encodée');
-```
-
-La même technique peut s'avérer utile pour les résultats du chiffrement :
-
-```php
-// Chiffrement d'un texte et obtention d'un texte comme résultat
-$encoded = base64_encode(service('encrypter')->encrypt($plaintext));
 ```
 
 <a name="utilisation-de-prefixes-dans-l-enregistrement-des-cles"></a>
