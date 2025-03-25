@@ -271,7 +271,7 @@ Parfois, vous souhaiterez peut-être regrouper plusieurs middlewares sous une se
 return [
     // ...
     /**
-     * @var array<string, class-string>
+     * @var array<string, array<class-string|string>>
      */
     'groups' => [
         'api'   => [],
@@ -302,27 +302,27 @@ Jusqu'ici, nous avons utilisé la clé `globals` du fichier `app/Config/middlewa
 Cependant vous pouvez utiliser la clé `build` du fichier de configuration des middlewares pour contrôler de façon plus efficace la manière dont les middlewares sont ajouter à votre application.
 
 ```php
-use BlitzPHP\Http\Middleware;
+use BlitzPHP\Http\MiddlewareQueue;
 
 return [
     // ...
-    'build' => function(Middleware $middleware) {
+    'build' => function(MiddlewareQueue $queue) {
         $layer = new \App\Middlewares\CustomMiddleware;
         
         // Le middleware sera ajouté à la fin de la file.
-        $middleware->add($layer);
+        $queue->add($layer);
 
         // Le middleware sera ajouté au début de la file
-        $middleware->prepend($layer);
+        $queue->prepend($layer);
 
         // Insère dans une place spécifique. Si cette dernière est
         // hors des limites, il sera ajouté à la fin.
-        $middleware->insertAt(2, $layer);
+        $queue->insertAt(2, $layer);
 
         // Insère avant un autre middleware.
         // Si la classe nommée ne peut pas être trouvée,
         // une exception sera renvoyée.
-        $middleware->insertBefore(
+        $queue->insertBefore(
             'BlitzPHP\Middlewares\BodyParser',
             $layer
         );
@@ -330,7 +330,7 @@ return [
         // Insère après un autre middleware.
         // Si la classe nommée ne peut pas être trouvée,
         // le middleware sera ajouté à la fin.
-        $middleware->insertAfter(
+        $queue->insertAfter(
             'BlitzPHP\Middlewares\BodyParser',
             $layer
         );
@@ -452,4 +452,7 @@ Vous pouvez également voir les routes et les filtres grâce à la commande klin
 ## Middlewares fournis
 
 BlitzPHP fournit nativement plusieurs middlewares pour gérer des tâches classiques d’une application web:  
-* `BlitzPHP\Middlewares\BodyParser` vous permet de décoder du JSON, XML et d’autres corps de requête encodés selon la valeur de l’en-tête `Content-Type`
+* `BlitzPHP\Middlewares\BodyParser` vous permet de décoder du JSON, XML et d’autres corps de requête encodés selon la valeur de l’en-tête `Content-Type`.
+* `BlitzPHP\Middlewares\ForceHTTPS` exige l’usage de HTTPS.
+* [`App\Middlewares\VerifyCsrfToken`](/docs/{version}/csrf) ajoute une protection CSRF à votre application.
+* `App\Middlewares\EncryptCookies` vous permet de manipuler des cookies chiffrés dans le cas où vous auriez besoin de manipuler des cookies avec des données obfusqués.
