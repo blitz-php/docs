@@ -453,6 +453,7 @@ Vous pouvez également voir les routes et les filtres grâce à la commande klin
 
 BlitzPHP fournit nativement plusieurs middlewares pour gérer des tâches classiques d’une application web:  
 * `BlitzPHP\Middlewares\BodyParser` vous permet de décoder du JSON, XML et d’autres corps de requête encodés selon la valeur de l’en-tête `Content-Type`.
-* `BlitzPHP\Middlewares\ForceHTTPS` exige l’usage de HTTPS.
+* `BlitzPHP\Middlewares\PerformanceMetrics` fournit les pseudo-variables pour les mesures de performance. Si vous souhaitez afficher le temps total écoulé entre le moment où BlitzPHP démarre et le moment où la sortie finale est envoyée au navigateur, placez simplement la pseudo-variable `{elapsed_time}` dans l'une de vos vues. Si vous souhaitez afficher l'utilisation de la mémoire dans vos fichiers de visualisation, utilisez la pseudo-variable `{memory_usage}`. Si vous n'avez pas besoin de cette fonctionnalité, supprimez "`\BlitzPHP\Middlewares\PerformanceMetrics::class`" de la clé `groups.web` de votre fichier de configuration des middlewares.
+* [`BlitzPHP\Middlewares\ForceHTTPS`](/docs/{version}/middlewares-de-securite#forcer-le-https) exige l’usage de HTTPS.
 * [`App\Middlewares\VerifyCsrfToken`](/docs/{version}/csrf) ajoute une protection CSRF à votre application.
-* `App\Middlewares\EncryptCookies` vous permet de manipuler des cookies chiffrés dans le cas où vous auriez besoin de manipuler des cookies avec des données obfusqués.
+* [`App\Middlewares\EncryptCookies`](/docs/{version}/middlewares-de-securite#gestion-de-cookies-chiffres) vous permet de manipuler des cookies chiffrés dans le cas où vous auriez besoin de manipuler des cookies avec des données obfusqués.
