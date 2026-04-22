@@ -527,7 +527,7 @@ class Blog
 ```php
 // Dans une vue.
 
-<?= view_cell('Blog::recentPosts', 'category=sport, limit=5') ?>
+<?= component('Blog::recentPosts', 'category=sport, limit=5') ?>
 ```
 
 <a name="composants-controles"></a>

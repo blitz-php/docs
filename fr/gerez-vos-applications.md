@@ -49,8 +49,8 @@ $paths_config_file = __DIR__ . '/../app/Config/paths.php';
 > **Note**  
 > En fonction du nouvel emplacement de votre dossier d'application, vous pouvez être amener a modifier également le paramètre `composer` dans le fichier `app/Config/paths.php` (environ à la ligne **63**).
 
-<a name="executer-plusieurs-applications-avec-un-seul-installation-blitzphp"></a>
-## Exécuter plusieurs applications avec un seul installation BlitzPHP
+<a name="executer-plusieurs-applications-avec-une-seule-installation-blitzphp"></a>
+## Exécuter plusieurs applications avec une seule installation BlitzPHP
 
 Si vous souhaitez partager une installation commune du framework BlitzPHP, pour gérer plusieurs applications différentes, placez simplement tous les répertoires situés dans votre répertoire d'application dans leur propre (sous-)-répertoire.
 
