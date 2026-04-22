@@ -209,22 +209,22 @@ Ex: `app/Views/layouts/default.php`
 <a name="utilisation-des-layouts-dans-les-vues"></a>
 ### Utilisation des layouts dans les vues
 
-Lorsqu'une vue veut être insérée dans un layout, elle doit utiliser la méthode `extend()` en tête du fichier :
+Lorsqu'une vue veut être insérée dans un layout, elle doit utiliser la méthode `extends()` en tête du fichier :
 
 ```php
-<?= $this->extend('default') ?>
+<?= $this->extends('default') ?>
 ```
 
-La méthode `extend()` prend le nom de tout fichier de vue que vous souhaitez utiliser. Comme il s'agit de vues standard, elles seront localisées comme une vue. Par défaut, la vue sera recherchée dans le répertoire `app/Views/layouts` de l'application, mais elle pourra également être recherchée dans d'autres namespace définis par PSR-4. Vous pouvez inclure un namespace pour localiser la vue dans le répertoire `Views` d'un namespace particulier :
+La méthode `extends()` prend le nom de tout fichier de vue que vous souhaitez utiliser. Comme il s'agit de vues standard, elles seront localisées comme une vue. Par défaut, la vue sera recherchée dans le répertoire `app/Views/layouts` de l'application, mais elle pourra également être recherchée dans d'autres namespace définis par PSR-4. Vous pouvez inclure un namespace pour localiser la vue dans le répertoire `Views` d'un namespace particulier :
 
 ```php
-<?= $this->extend('Blog\Views\default') ?>
+<?= $this->extends('Blog\Views\default') ?>
 ```
 
 Tout le contenu d'une vue qui étend un layout doit être inclus dans les appels de méthode `start($name)` et `stop()`. Tout contenu situé entre ces appels sera inséré dans le layout à chaque fois que l'appel `show($name)` correspondant au nom de la section existera.
 
 ```php
-<?= $this->extend('default') ?>
+<?= $this->extends('default') ?>
 
 <?= $this->start('content') ?>
     <h1>Hello World!</h1>
@@ -236,7 +236,7 @@ La méthode `stop()` n'a pas besoin du nom de la section. Elle sait automatiquem
 Les sections peuvent contenir des sections imbriquées :
 
 ```php
-<?= $this->extend('default') ?>
+<?= $this->extends('default') ?>
 
 <?= $this->start('content') ?>
     <h1>Hello World!</h1>
@@ -273,7 +273,7 @@ Il rend la vue `app/Views/some_view.php` et s'il étend `default`, le layout `ap
 Les vues partielles sont des fichiers de vues qui n'étendent aucun layout. Elles contiennent généralement du contenu qui peut être réutilisé d'une vue à l'autre. Lorsque vous utilisez des layouts de vues, vous pouvez utiliser `$this->include()` pour inclure les fichiers partiels de vues.
 
 ```php
-<?= $this->extend('default') ?>
+<?= $this->extends('default') ?>
 
 <?= $this->start('content') ?>
     <h1>Hello World!</h1>
@@ -782,3 +782,140 @@ Vous pouvez fournir un nom personnalisé à utiliser à la place de celui géné
 // Mettre le composant en cache pendant 5 minutes
 <?= component('App\Components\Blog::recentPosts', 'limit=5', 5 * MINUTE, 'nom_du_cache') ?>
 ```
+
+<a name="slots-pour-composants"></a>
+### Slots pour composants
+
+Lorsque vous utilisez des composants (contrôlés), vous avez souvent besoin de transmettre du contenu HTML structuré, voire d'autres composants, à l'intérieur du composant. Les **slots** répondent à ce besoin.
+
+Un slot est un espace réservé dans la vue du composant, dans lequel vous pouvez injecter tout contenu (texte, balises, appels à d'autres composants). BlitzPHP supporte :
+
+- Un **slot par défaut** (non nommé)
+- Des **slots nommés** (ex: `header`, `footer`, `sidebar`)
+
+<a name="definition-des-slots-dans-un-composant"></a>
+#### Définition des slots dans un composant
+
+Dans la vue d'un composant contrôlé, utilisez les variables `$slot` (contenu par défaut) et `$slots` (tableau associatif des slots nommés).
+
+**Exemple – Composant `AlertComponent` :**
+
+```php
+// app/Components/AlertComponent.php
+namespace App\Components;
+
+use BlitzPHP\View\Components\Component;
+
+class AlertComponent extends Component
+{
+    public string $variant = 'primary';
+}
+```
+
+**Vue associée `app/Components/alert.php` :**
+
+```php
+<div class="alert alert-<?= esc($variant) ?>">
+    <?php if (isset($slots['header'])): ?>
+        <div class="alert-header"><?= $slots['header'] ?></div>
+    <?php endif; ?>
+    <div class="alert-body"><?= $slot ?></div>
+    <?php if (isset($slots['footer'])): ?>
+        <div class="alert-footer"><?= $slots['footer'] ?></div>
+    <?php endif; ?>
+</div>
+```
+
+<a name="utilisation-des-slots-dans-une-vue-principale"></a>
+#### Utilisation des slots dans une vue principale
+
+Pour passer du contenu aux slots, utilisez le helper `component()` avec un **callback**. Ce callback retourne une chaîne contenant des balises `<x-slot>` pour les slots nommés. Tout ce qui n'est pas dans une balise `<x-slot>` devient le contenu du slot par défaut.
+
+**Syntaxe :**
+
+```php
+<?= component('Alert', ['variant' => 'danger'], function () { ?>
+    <x-slot name="header">
+        <i class="fa fa-exclamation-circle"></i>
+        <h1>Attention !</h1>
+    </x-slot>
+    <p>Voulez-vous vraiment supprimer cet élément ?</p>
+    <div class="d-flex gap-2">
+        <button class="btn btn-danger">Oui</button>
+        <button class="btn btn-secondary">Non</button>
+    </div>
+    <x-slot name="footer">
+        <small>Cette action est irréversible.</small>
+    </x-slot>
+<?php }) ?>
+```
+
+**Résultat HTML généré :**
+
+```html
+<div class="alert alert-danger">
+    <div class="alert-header">
+        <i class="fa fa-exclamation-circle"></i>
+        <h1>Attention !</h1>
+    </div>
+    <div class="alert-body">
+        <p>Voulez-vous vraiment supprimer cet élément ?</p>
+        <div class="d-flex gap-2">
+            <button class="btn btn-danger">Oui</button>
+            <button class="btn btn-secondary">Non</button>
+        </div>
+    </div>
+    <div class="alert-footer">
+        <small>Cette action est irréversible.</small>
+    </div>
+</div>
+```
+
+> **Attention**  
+> - Les balises `<x-slot>` doivent utiliser l'attribut `name` avec des **guillemets doubles**.
+> - Elles ne doivent **pas être auto‑fermées** (`<x-slot name="foo" />` n'est pas supporté).
+> - **L'imbrication** de `<x-slot>` est interdite (une balise `<x-slot>` ne peut pas en contenir une autre).
+> - Le contenu d'un slot peut contenir n'importe quel HTML, y compris d'autres appels de composants.
+> - Les slots ne sont disponibles que pour les **composants contrôlés** (ceux qui étendent `Component`). Les composants simples ne les reçoivent pas.
+
+<a name="utilisation-avancee-des-slots"></a>
+#### Utilisation avancée : passer des données aux slots
+
+Les variables définies dans le callback du composant (via `use`) sont accessibles dans les slots, exactement comme dans une closure PHP classique.
+
+```php
+<?php $user = auth()->user(); ?>
+<?= component('ProfileCard', [], function () use ($user) { ?>
+    <x-slot name="avatar">
+        <img src="<?= $user->avatar ?>" alt="Avatar">
+    </x-slot>
+    <p>Bonjour, <?= esc($user->name) ?> !</p>
+<?php }) ?>
+```
+
+<a name="migration-depuis-l-ancienne-syntaxe"></a>
+#### Migration depuis l'ancienne syntaxe
+
+Avant l'introduction des slots (**version 1.1**), pour passer du HTML à un composant, il fallait le mettre dans une chaîne ou utiliser des paramètres complexes. Désormais, la syntaxe `<x-slot>` offre une bien meilleure lisibilité.
+
+Si vous possédez des composants simples que vous souhaitez faire bénéficier des slots, convertissez‑les en composants contrôlés (ajoutez `extends Component` et éventuellement une vue). Le reste de votre code existant reste parfaitement compatible.
+
+<a name="limitations-techniques"></a>
+#### Limitations techniques
+
+L'extraction des balises `<x-slot>` se fait via <a href="https://www.php.net/manual/fr/class.domdocument.php" target="_blank">DOMDocument</a> pour une robustesse maximale. Toutefois, pour des raisons de performance et de simplicité, nous imposons les quelques contraintes mentionnées ci‑dessus. Respectez‑les pour éviter tout comportement inattendu.
+
+> **Note**  
+> Si vous devez générer dynamiquement des noms de slots, il est préférable de passer par un tableau de données plutôt que par le markup `<x-slot>`. Par exemple, vous pouvez définir un paramètre `slots` dans le tableau `$params` du helper `component()`.
+> 
+> ```php
+> <?= component('Alert', [
+>     'variant' => 'warning',
+>     'slots' => [
+>         'header' => '<h1>Titre dynamique</h1>',
+>         'footer' => '<p>Pied</p>'
+>     ]
+> ]) ?>
+> ```
+> 
+> Cette alternative est également supportée et peut s’avérer pratique dans certains cas.
